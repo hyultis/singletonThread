@@ -11,8 +11,10 @@ fn simple() {
 	let testdefault = Arc::new(RwLock::new(0));
 	let cloneintoThread = testdefault.clone();
 	let mut testThread = SingletonThread::new(move || {
-		println!("i'm running !");
-		*cloneintoThread.clone().write() += 1;
+		let clone = cloneintoThread.clone();
+		let mut binding = clone.write();
+		println!("i'm running ! {}",*binding);
+		*binding += 1;
 	});
 	
 	let starttime = Instant::now();

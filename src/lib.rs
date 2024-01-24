@@ -111,9 +111,10 @@ impl SingletonThread
 	}
 	
 	/// define if the thread auto relaunch himself (technically it just use the same thread)
+	/// set to false if you want to stop a looped thread that running.
 	pub fn setLoop(&mut self, canLoop: bool)
 	{
-		self._loop = Arc::new(RwLock::new(canLoop));
+		*self._loop.write() = canLoop;
 	}
 	
 	pub fn setThreadName(&mut self, name: impl Into<String>)
@@ -150,5 +151,12 @@ impl SingletonThread
 				break;
 			}
 		}
+	}
+}
+
+impl Drop for SingletonThread
+{
+	fn drop(&mut self) {
+		self.setLoop(false);
 	}
 }
