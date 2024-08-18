@@ -6,7 +6,7 @@ A library using a FnMut you defined and run it on a thread that follow a singlet
 
 Some tool allow you to define how you want to rerun the thread :
 
-- setDuration() or setDuration_FPS() : define a minimum time between to run. (default 17ms / 60fps)
+- setDuration() or setDuration_FPS() : define a minimum time between to run. (default 1ns)
 - thread_launch() : try to rerun the thread, do nothing if the thread is already running
 - setLoop() : loop the thread
 
