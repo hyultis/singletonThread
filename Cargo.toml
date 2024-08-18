@@ -1,6 +1,6 @@
 [package]
 name = "singletonThread"
-version = "1.0.0"
+version = "1.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 readme = "README.md"
@@ -12,5 +12,5 @@ description = "thread in a singleton"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-parking_lot = "0.12.1"
-thread-priority = "0.15.1"
+parking_lot = "0.12"
+thread-priority = "1.1"
