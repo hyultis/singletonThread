@@ -1,28 +1,38 @@
 name: tests-and-publish
 run-name: Check code and publish new version on crate.io
-on: [workflow_dispatch]
+on: [ workflow_dispatch ]
 
 env:
-    CARGO_TERM_COLOR: always
+  CARGO_TERM_COLOR: always
 
 jobs:
-    tests:
-        runs-on: ubuntu-latest
-        steps:
-            -   uses: actions/checkout@v4
-            -   name: Run cargo tests
-                run: cargo test --features thread_priority --test tests
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run cargo tests
+        run: cargo test --features thread_priority --test tests
 
-    publish:
-      runs-on: ubuntu-latest
-      needs: tests
-      environment: release  # Optional: for enhanced security
-      permissions:
-        id-token: write     # Required for OIDC token exchange
-      steps:
-        - uses: actions/checkout@v4
-        - uses: rust-lang/crates-io-auth-action@v1
-          id: auth
-        - run: cargo publish
-          env:
-            CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
+  publish:
+    runs-on: ubuntu-latest
+    needs: tests
+    environment: release  # Optional: for enhanced security
+    permissions:
+      id-token: write     # Required for OIDC token exchange
+    steps:
+      - uses: actions/checkout@v4
+      - uses: rust-lang/crates-io-auth-action@v1
+        id: auth
+      - run: cargo publish
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
+
+  release:
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'

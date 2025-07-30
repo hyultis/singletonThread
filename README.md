@@ -1,17 +1,20 @@
 # SingletonThread
 
-`SingletonThread` is a Rust library designed to manage the execution of a user-defined `FnMut` function on a thread following the **singleton pattern**. This ensures that at any given time, only **one instance of the thread** can be active. Before starting a new execution, the previous one must have completed, providing fine-grained control for thread-safe operations.
+`SingletonThread` is a Rust library designed to manage the execution of a user-defined `FnMut` function on a 
+thread following the **singleton pattern**. This ensures that at any given time, only **one instance of the thread** 
+can be active. Before starting a new execution, the previous one must have completed.
 
-This library offers functionality to control and limit thread execution frequency, making it ideal for scenarios where precise timing or controlled thread reuse is needed.
+This library offers functionality to control and limit thread execution frequency, 
+making it ideal for scenarios where precise timing or controlled thread reuse is needed.
 
 ## Features
 
-- **Singleton Thread Execution**: Ensures that only one thread instance runs at a time.
+- **Singleton Thread Execution**: Ensures that only one thread instance runs at a time, via :
+	- `thread_launch()`: Attempt to (re)launch the thread while ensuring that only a single thread instance is running.
+	- `thread_launch_delayabe()`: Same as `thread_launch()` but if the thread is already running, mark the singleton to run one additional time (do not stack).
 - **Flexible Rerun Control**:
-  - `setDuration()` or `setDuration_FPS()`: Specify a minimum time interval between successive thread executions (default: 1 ns).
-  - `thread_launch()`: Attempt to relaunch the thread while ensuring that only a single thread instance is running.
-  - `setLoop()`: Create a loop that continuously runs the thread.
-- Prevents overlapping execution of threads, ensuring consistent usage.
+    - `duration_set()` or `duration_setFPS()`: Specify a minimum time interval between successive thread executions (default: 1 ns, can be changed dynamically).
+    - `loop_set()`: Set the thread to continuously run the singleton (loop, can be changed dynamically)
 
 ## Getting Started
 

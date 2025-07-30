@@ -14,4 +14,4 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - **[Breaking]** Refactored most of the method names.
 - Refactored internal thread management for better performance and maintainability.
 - Updated dependency.
-- Updated to Rust 2024 edition, leveraging new language features and optimizations.
+- Updated to Rust 2024 edition.
