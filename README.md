@@ -22,12 +22,13 @@ making it ideal for scenarios where precise timing or controlled thread reuse is
 
 ```toml
 [dependencies]
-singletonThread = "2.0"
+singletonThread = "2.1"
 ```
 
 ### features
 
 * thread_priority : allow setting thread priority via `thread-priority` crate
+* drop : active auto waiting for thread to finish before dropping (ignore wait error)
 
 ## Example Usage
 
