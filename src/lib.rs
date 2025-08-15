@@ -106,6 +106,18 @@ impl SingletonThread
 	{
 		self._threadPriority = priority;
 	}
+
+	/// set the thread to stop looping
+	/// wait the thread is stopped
+	pub fn wait(&mut self) -> std::thread::Result<()> {
+		self.loop_set(false);
+
+		if let Some(threadinfo) = self._thread.take() {
+			return threadinfo.join().map(|_| ());
+		}
+
+		return Ok(());
+	}
 	
 	////// PRIVATE
 	
@@ -192,9 +204,12 @@ impl SingletonThread
 	}
 }
 
+#[cfg(feature = "drop")]
+/// when dropped, the thread is stopped and waited for completion
+/// only if the feature "drop" is enabled
 impl Drop for SingletonThread
 {
 	fn drop(&mut self) {
-		self.loop_set(false);
+		let _ = self.wait();
 	}
 }
